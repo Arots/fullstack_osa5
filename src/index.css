@@ -16,3 +16,35 @@
     font-size: 12px;
     background-color: rgb(172, 172, 172);
 }
+
+.paragraph {
+    margin-bottom: 20px;
+}
+
+.form {
+    margin-bottom: 20px;
+}
+
+.content {
+    text-align: center;
+    flex: auto;
+    font-size: 20px;
+}
+
+.blog {
+    margin-bottom: 10px;
+}
+
+.virheviesti {
+    border: 2px solid red;
+    font-size: 20px;
+    color: red;
+    margin-bottom: 10px;
+}
+
+.lisaysViesti {
+    border: 2px solid green;
+    font-size: 20px;
+    color: green;
+    margin-bottom: 10px;
+}

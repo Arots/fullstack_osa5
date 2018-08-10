@@ -1,8 +1,8 @@
 import React from 'react'
-import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
+import BlogForm from './components/BlogForm'
 import './index.css'
 
 class App extends React.Component {
@@ -13,7 +13,7 @@ class App extends React.Component {
       user: null,
       username: '',
       passwordHash: '',
-      error: ''
+      message: ''
     }
   }
 
@@ -21,12 +21,27 @@ class App extends React.Component {
     blogService.getAll().then(blogs =>
       this.setState({ blogs })
     )
+
+    const loggedUserJSON = window.localStorage.getItem('loggedUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      this.setState({ user })
+      blogService.setToken(user.token)
+    }
   }
 
   handleLoginChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
     })
+  }
+  
+  logout = async (event) => {
+    event.preventDefault()
+    this.setState({
+      user: null
+    })
+    window.localStorage.removeItem('loggedUser')
   }
 
   login = async (event) => {
@@ -40,7 +55,7 @@ class App extends React.Component {
 
       console.log(user)
       
-      
+      window.localStorage.setItem('loggedUser', JSON.stringify(user))
       blogService.setToken(user.token)
       this.setState({
         username: '',
@@ -49,10 +64,10 @@ class App extends React.Component {
       })
     } catch (exception) {
       this.setState({
-        error: 'käyttäjätunnus tai salasana virheellinen',
+        message: 'käyttäjätunnus tai salasana virheellinen',
       })
       setTimeout(() => {
-        this.setState({ error: null })
+        this.setState({ message: '' })
       }, 5000)
     }
   }
@@ -65,14 +80,13 @@ class App extends React.Component {
           username={this.state.username} 
           passwordHash={this.state.passwordHash}
           handleChange={this.handleLoginChange}
-          handleSubmit={this.login} /> :
-        <div>
-          <h2>Blogs</h2>
-          <p> {this.state.user.name} logged in </p>
-          {this.state.blogs.map(blog => 
-            <Blog key={blog._id} blog={blog}/>
-          )}
-        </div>
+          handleSubmit={this.login}
+          message={this.state.message} /> :
+        <BlogForm
+          message={this.state.message}
+          logout={this.logout}
+          user={this.state.user}
+          blogs={this.state.blogs} />
         }
       </div>
     );

@@ -1,9 +1,11 @@
 import React from 'react'
+import Notification from './Notification'
 
-const LoginForm = ({ username, passwordHash, handleSubmit, handleChange }) => {
+const LoginForm = ({ username, passwordHash, handleSubmit, handleChange, message }) => {
     return (
         <div>
             <h2>Log in to application </h2>
+            {message === '' ? <div />  : <Notification className="virheteksti" message={message}/> }
             <form onSubmit={handleSubmit} >
                 username: <input className="input" name="username"
                 type="text" value={username} onChange={handleChange} />
