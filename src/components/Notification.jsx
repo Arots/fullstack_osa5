@@ -2,7 +2,7 @@ import React from 'react'
 
 const Notification = ({ message }) => {
     return (
-        <div className="virheviesti">
+        <div className={"" + (message === '' ? "virheViesti" : "lisaysViesti")}>
             {message}
         </div>
     )

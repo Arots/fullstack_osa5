@@ -4,6 +4,7 @@ import loginService from './services/login'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import './index.css'
+import Togglable from './components/Togglable';
 
 class App extends React.Component {
   constructor(props) {
@@ -82,11 +83,12 @@ class App extends React.Component {
           handleChange={this.handleLoginChange}
           handleSubmit={this.login}
           message={this.state.message} /> :
-        <BlogForm
-          message={this.state.message}
-          logout={this.logout}
-          user={this.state.user}
-          blogs={this.state.blogs} />
+        <Togglable buttonLabel="Lisää blogi" ref={ component => this.BlogForm = component }>
+          <BlogForm
+            logout={this.logout}
+            user={this.state.user}
+            blogs={this.state.blogs} />
+        </Togglable>
         }
       </div>
     );

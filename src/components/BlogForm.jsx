@@ -2,6 +2,7 @@ import React from 'react'
 import Blog from './Blog'
 import blogService from '../services/blogs'
 import Notification from './Notification'
+import Togglable from './Togglable';
 
 class BlogForm extends React.Component {
     constructor(props) {
@@ -10,7 +11,9 @@ class BlogForm extends React.Component {
             title: '',
             author: '',
             url: '',
-            blogs: []
+            blogs: [],
+            message: '',
+            toggle: true
         }
     }
 
@@ -35,19 +38,24 @@ class BlogForm extends React.Component {
                 url: this.state.url
             }
 
-            const createdBlog = await blogService.create(newBlog)
+            const createdBlog = blogService
+                .create(newBlog)
+                .then(addedBlog => {
+                    this.setState({
+                        message: `a new blog ${addedBlog.title} by ${addedBlog.author} has been added`,
+                        title: '',
+                        author: '',
+                        url: '',
+                        toggle: false,
+                        blogs: this.state.blogs.concat(addedBlog)
+                    })
+                    setTimeout(() => {
+                        this.setState({
+                            message: ''
+                        })
+                    }, 3000)
+                })
             console.log(createdBlog)
-
-            const allBlogs = await blogService.getAll()
-        
-            this.setState({
-                message: `a new blog ${this.state.title} by ${this.state.author} has been added`,
-                title: '',
-                author: '',
-                url: '',
-                blogs: allBlogs
-
-            })
 
         } catch (exception) {
             console.log(exception)
@@ -64,14 +72,15 @@ class BlogForm extends React.Component {
 
     render () {
         return (
-            <div className="content">
+            <div className="content" >
                 <h2>Blogs</h2>
-                {this.props.message === '' ? <div />  : <Notification className="lisaysViesti" 
-                message={this.props.message}/> }
+                {this.state.message === '' ? <div />  : <Notification className="lisaysViesti" 
+                message={this.state.message}/> }
                 <p className="paragraph"> {this.props.user.name} logged in <button
                     type="logout" className="button" onClick={this.props.logout} >
                     logout</button>
                 </p>
+                {this.state.toggle === true ? 
                 <form className="form" onSubmit={this.addBlog} >
                     title: <input className="input" name="title"
                     type="text" value={this.state.title} onChange={this.handleChange} />
@@ -84,7 +93,8 @@ class BlogForm extends React.Component {
                     <br/>
                     <br/>
                     <button type='submit' className="button">Create </button>
-                </form>
+                </form> : <div/>
+                }
                 {this.state.blogs.map(blog => 
                 <Blog className="blog" key={blog._id} blog={blog}/>
               )}
