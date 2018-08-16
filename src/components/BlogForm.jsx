@@ -75,7 +75,7 @@ class BlogForm extends React.Component {
 
     updateBlog = (newBlog) => {
         const mapped = this.state.blogs.map(blog=>
-            blog.id == newBlog.id ? newBlog : blog)
+            blog.id === newBlog.id ? newBlog : blog)
         this.setState({
             blogs: mapped.sort((a, b) => a.likes - b.likes).reverse()
           })
@@ -124,7 +124,7 @@ class BlogForm extends React.Component {
                 }
                 {this.state.blogs.map(blog =>
                 <Blog className="blog" key={blog._id} blog={blog} 
-                updateBlog={this.updateBlog} afterDelete={this.afterDelete}/>
+                updateBlog={this.updateBlog} afterDelete={this.afterDelete} />
               )}
             </div>
         );

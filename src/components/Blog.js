@@ -51,9 +51,10 @@ class Blog extends React.Component {
 
   handleDelete = async (event) => {
     event.preventDefault()
-    await blogService.remove(this.props.blog.id)
-
-    this.props.afterDelete()
+    if (window.confirm(`Haluatko deletoida blogin ${this.props.blog.title}?`)) {
+      await blogService.remove(this.props.blog.id)
+      this.props.afterDelete()
+    }
   }
 
   render() {
@@ -67,7 +68,7 @@ class Blog extends React.Component {
                 <a href={this.props.blog.url}>{this.props.blog.url}</a> <br />
                 {this.props.blog.likes} likes <button type="button" onClick={this.addLike}>like</button> <br />
                 added by {this.props.blog.user.username} <br />
-                <button type="button" onClick={this.handleDelete}>delete</button>
+                <button onClick={this.handleDelete} className="button">delete</button>
               </div>
             </div >
           ) : (
