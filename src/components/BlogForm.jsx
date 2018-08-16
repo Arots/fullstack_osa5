@@ -6,6 +6,7 @@ import Notification from './Notification'
 class BlogForm extends React.Component {
     constructor(props) {
         super(props)
+        console.log(this.props.user)
         this.state = {
             title: '',
             author: '',
@@ -40,6 +41,7 @@ class BlogForm extends React.Component {
 
             const createdBlog = await blogService
                 .create(newBlog)
+            const newBlogList = this.state.blogs.concat(createdBlog)
 
             this.setState({
                 message: `a new blog ${createdBlog.title} by ${createdBlog.author} has been added`,
@@ -47,10 +49,7 @@ class BlogForm extends React.Component {
                 author: '',
                 url: '',
                 toggle: false,
-                blogs: this.state.blogs.concat(createdBlog)
-            })
-            this.setState({
-                blogs: this.state.blogs.sort((a, b) => a.likes - b.likes).reverse()
+                blogs: newBlogList.sort((a, b) => a.likes - b.likes).reverse()
             })
             setTimeout(() => {
                 this.setState({
@@ -124,8 +123,7 @@ class BlogForm extends React.Component {
                 }
                 {this.state.blogs.map(blog =>
                 <Blog className="blog" key={blog._id} blog={blog} 
-                updateBlog={this.updateBlog} afterDelete={this.afterDelete}
-                showDeleteButton={this.props.blog.user._id === undefined || this.props.user._id === this.props.blog.user._id} />
+                updateBlog={this.updateBlog} afterDelete={this.afterDelete} user={this.props.user}/>
               )}
             </div>
         );
