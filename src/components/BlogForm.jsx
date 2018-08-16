@@ -124,7 +124,8 @@ class BlogForm extends React.Component {
                 }
                 {this.state.blogs.map(blog =>
                 <Blog className="blog" key={blog._id} blog={blog} 
-                updateBlog={this.updateBlog} afterDelete={this.afterDelete} />
+                updateBlog={this.updateBlog} afterDelete={this.afterDelete}
+                showDeleteButton={this.props.blog.user._id === undefined || this.props.user._id === this.props.blog.user._id} />
               )}
             </div>
         );
