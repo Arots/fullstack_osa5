@@ -68,7 +68,7 @@ class Blog extends React.Component {
                 <a href={this.props.blog.url}>{this.props.blog.url}</a> <br />
                 {this.props.blog.likes} likes <button type="button" onClick={this.addLike}>like</button> <br />
                 added by {this.props.blog.user.username} <br />
-                {this.props.user.username === this.props.blog.user.username ?
+                {this.props.user._id === this.props.blog.user.id ?
                 <button
                  onClick={this.handleDelete} className="button">delete</button>
                  : <div/> }
