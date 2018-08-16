@@ -28,9 +28,19 @@ class Blog extends React.Component {
         title: this.props.blog.title,
         url: this.props.blog.url
       }
+
+      const theUpdatedBlog = {
+        id: this.props.blog.id,
+        user: this.props.blog.user,
+        likes: this.props.blog.likes +1,
+        author: this.props.blog.author,
+        title: this.props.blog.title,
+        url: this.props.blog.url
+      }
+      console.log(theUpdatedBlog)
   
       const updatedBlog = await blogService.update(blog.id, blog)
-      this.props.updatedBlog(blog)
+      this.props.updateBlog(theUpdatedBlog)
       console.log(updatedBlog)
 
     } catch (exception) {

@@ -70,9 +70,10 @@ class BlogForm extends React.Component {
         }
     }
 
-    updateBlog = (changedBlog) => {
+    updateBlog = (newBlog) => {
         this.setState({
-            blogs: this.state.blogs.map(blog => blog.id !== changedBlog.id ? blog : changedBlog)
+            blogs: this.state.blogs.map(blog=>
+                 blog.id == newBlog.id ? newBlog : blog)
           })
     }
 
@@ -107,12 +108,10 @@ class BlogForm extends React.Component {
                     <button type='submit' className="button">Create </button>
                 </form> : <button className="button" onClick={this.toggle}>Lisää blogi</button>
                 }
-                <ul>
-                {this.state.blogs.map(blog => <li>
-                <Blog className="blog" key={blog._id} blog={blog}
-                    changedBlog={this.changedBlog}/> </li>
+                {this.state.blogs.map(blog =>
+                <Blog className="blog" key={blog._id} blog={blog} 
+                updateBlog={this.updateBlog}/>
               )}
-                </ul>
             </div>
         );
     }

@@ -58,6 +58,8 @@
     border: 3px dotted green;
     border-radius: 12px;
     cursor: pointer;
+    width: 500px;
+    margin-left: 37.5%;
 }
 
 .virheViesti {
