@@ -17,7 +17,8 @@
 .buttonIsompi {
     font-size: 60px;
     position: absolute;
-    right: 1100px;
+    right: 30%;
+    left: 30%;
     top: 40%;
     padding: 25px;
     background-color: transparent;
@@ -54,6 +55,9 @@
 
 .blog {
     margin-bottom: 10px;
+    border: 3px dotted green;
+    border-radius: 12px;
+    cursor: pointer;
 }
 
 .virheViesti {

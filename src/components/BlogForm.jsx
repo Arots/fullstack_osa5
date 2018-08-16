@@ -2,7 +2,6 @@ import React from 'react'
 import Blog from './Blog'
 import blogService from '../services/blogs'
 import Notification from './Notification'
-import Togglable from './Togglable';
 
 class BlogForm extends React.Component {
     constructor(props) {
@@ -13,7 +12,8 @@ class BlogForm extends React.Component {
             url: '',
             blogs: [],
             message: '',
-            toggle: true
+            toggle: true,
+            openBlog: false
         }
     }
 
@@ -38,23 +38,23 @@ class BlogForm extends React.Component {
                 url: this.state.url
             }
 
-            const createdBlog = blogService
+            const createdBlog = await blogService
                 .create(newBlog)
-                .then(addedBlog => {
-                    this.setState({
-                        message: `a new blog ${addedBlog.title} by ${addedBlog.author} has been added`,
-                        title: '',
-                        author: '',
-                        url: '',
-                        toggle: false,
-                        blogs: this.state.blogs.concat(addedBlog)
-                    })
-                    setTimeout(() => {
-                        this.setState({
-                            message: ''
-                        })
-                    }, 3000)
+
+            this.setState({
+                message: `a new blog ${createdBlog.title} by ${createdBlog.author} has been added`,
+                title: '',
+                author: '',
+                url: '',
+                toggle: false,
+                blogs: this.state.blogs.concat(createdBlog)
+            })
+            setTimeout(() => {
+                this.setState({
+                    message: ''
                 })
+            }, 3000)
+
             console.log(createdBlog)
 
         } catch (exception) {
@@ -68,6 +68,18 @@ class BlogForm extends React.Component {
                 })
             }, 5000)
         }
+    }
+
+    updateBlog = (changedBlog) => {
+        this.setState({
+            blogs: this.state.blogs.map(blog => blog.id !== changedBlog.id ? blog : changedBlog)
+          })
+    }
+
+    toggle = () => {
+        this.setState({
+            toggle: true
+        })
     }
 
     render () {
@@ -93,11 +105,14 @@ class BlogForm extends React.Component {
                     <br/>
                     <br/>
                     <button type='submit' className="button">Create </button>
-                </form> : <div/>
+                </form> : <button className="button" onClick={this.toggle}>Lisää blogi</button>
                 }
-                {this.state.blogs.map(blog => 
-                <Blog className="blog" key={blog._id} blog={blog}/>
+                <ul>
+                {this.state.blogs.map(blog => <li>
+                <Blog className="blog" key={blog._id} blog={blog}
+                    changedBlog={this.changedBlog}/> </li>
               )}
+                </ul>
             </div>
         );
     }
