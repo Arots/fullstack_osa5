@@ -2,6 +2,7 @@ import React from 'react'
 import Blog from './Blog'
 import blogService from '../services/blogs'
 import Notification from './Notification'
+import PropTypes from 'prop-types'
 
 class BlogForm extends React.Component {
     constructor(props) {
@@ -122,12 +123,18 @@ class BlogForm extends React.Component {
                 </div>
                 }
                 {this.state.blogs.map(blog =>
-                <Blog className="blog" key={blog._id} blog={blog} 
+                <Blog className="blog" key={blog.id} blog={blog} 
                 updateBlog={this.updateBlog} afterDelete={this.afterDelete} user={this.props.user}/>
               )}
             </div>
         );
     } 
+}
+
+BlogForm.propTypes = {
+    logout: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
+    blogs: PropTypes.array.isRequired
 }
 
 export default BlogForm;
