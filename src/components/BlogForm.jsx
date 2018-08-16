@@ -81,6 +81,12 @@ class BlogForm extends React.Component {
           })
     }
 
+    afterDelete = () => {
+        blogService.getAll().then(blogs =>
+            this.setState({ blogs: blogs.sort((a, b) => a.likes - b.likes).reverse() })
+          )
+    }
+
     toggle = () => {
         this.setState({
             toggle: true
@@ -118,7 +124,7 @@ class BlogForm extends React.Component {
                 }
                 {this.state.blogs.map(blog =>
                 <Blog className="blog" key={blog._id} blog={blog} 
-                updateBlog={this.updateBlog}/>
+                updateBlog={this.updateBlog} afterDelete={this.afterDelete}/>
               )}
             </div>
         );

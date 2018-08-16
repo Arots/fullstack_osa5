@@ -49,6 +49,13 @@ class Blog extends React.Component {
     }
   }
 
+  handleDelete = async (event) => {
+    event.preventDefault()
+    await blogService.remove(this.props.blog.id)
+
+    this.props.afterDelete()
+  }
+
   render() {
     return (
       <div>
@@ -59,7 +66,8 @@ class Blog extends React.Component {
               <div>
                 <a href={this.props.blog.url}>{this.props.blog.url}</a> <br />
                 {this.props.blog.likes} likes <button type="button" onClick={this.addLike}>like</button> <br />
-                added by {this.props.blog.user.username}
+                added by {this.props.blog.user.username} <br />
+                <button type="button" onClick={this.handleDelete}>delete</button>
               </div>
             </div >
           ) : (
