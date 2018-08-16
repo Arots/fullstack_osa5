@@ -1,5 +1,6 @@
 import React from 'react'
 import Notification from './Notification'
+import PropTypes from 'prop-types'
 
 const LoginForm = ({ username, passwordHash, handleSubmit, handleChange, message }) => {
     return (
@@ -17,6 +18,13 @@ const LoginForm = ({ username, passwordHash, handleSubmit, handleChange, message
             </form>
         </div>
     )
+
+    LoginForm.propTypes = {
+        username: PropTypes.string.isRequired,
+        passwordHash: PropTypes.string.isRequired,
+        handleSubmit: PropTypes.func.isRequired,
+        handleChange: PropTypes.func.isRequired
+    }
 }
 
 export default LoginForm

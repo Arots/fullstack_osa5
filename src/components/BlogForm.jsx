@@ -127,7 +127,7 @@ class BlogForm extends React.Component {
               )}
             </div>
         );
-    }
+    } 
 }
 
 export default BlogForm;
