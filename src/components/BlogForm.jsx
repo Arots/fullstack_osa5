@@ -19,7 +19,7 @@ class BlogForm extends React.Component {
 
     componentDidMount() {
         blogService.getAll().then(blogs =>
-          this.setState({ blogs })
+          this.setState({ blogs: blogs.sort((a, b) => a.likes - b.likes).reverse() })
         )
     }
 
@@ -49,6 +49,9 @@ class BlogForm extends React.Component {
                 toggle: false,
                 blogs: this.state.blogs.concat(createdBlog)
             })
+            this.setState({
+                blogs: this.state.blogs.sort((a, b) => a.likes - b.likes).reverse()
+            })
             setTimeout(() => {
                 this.setState({
                     message: ''
@@ -71,9 +74,10 @@ class BlogForm extends React.Component {
     }
 
     updateBlog = (newBlog) => {
+        const mapped = this.state.blogs.map(blog=>
+            blog.id == newBlog.id ? newBlog : blog)
         this.setState({
-            blogs: this.state.blogs.map(blog=>
-                 blog.id == newBlog.id ? newBlog : blog)
+            blogs: mapped.sort((a, b) => a.likes - b.likes).reverse()
           })
     }
 
@@ -106,7 +110,11 @@ class BlogForm extends React.Component {
                     <br/>
                     <br/>
                     <button type='submit' className="button">Create </button>
-                </form> : <button className="button" onClick={this.toggle}>Lisää blogi</button>
+                </form> : 
+                <div>
+                    <button className="button" onClick={this.toggle}>Lisää blogi</button>
+                    <br />
+                </div>
                 }
                 {this.state.blogs.map(blog =>
                 <Blog className="blog" key={blog._id} blog={blog} 

@@ -12,6 +12,7 @@
     width: 70px;
     height: 50px;
     transition: width 0.7s ease-in-out;
+    margin-bottom: 10px;
 }
 
 .buttonIsompi {
