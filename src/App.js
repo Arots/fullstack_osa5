@@ -75,9 +75,9 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="forTest" >
         {this.state.user === null ? 
-        <LoginForm 
+        <LoginForm className="kirjautumisLomake"
           username={this.state.username} 
           passwordHash={this.state.passwordHash}
           handleChange={this.handleLoginChange}
