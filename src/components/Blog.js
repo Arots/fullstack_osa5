@@ -59,7 +59,7 @@ class Blog extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="blogList">
         {
           this.state.openBlog ? (
             <div className="blog" onClick={this.toggleOpen}>
