@@ -18,7 +18,6 @@ describe('<App />', () => {
 
       expect(blogForm.text()).not.toContain('Blogs')
       expect(testComponents.text()).toContain('Log in to application')
-      //expect(blogService.blogs.length).toBe(0)
       expect(testComponents.length).toBe(1)
   })
 })
